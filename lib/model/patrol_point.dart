@@ -1,0 +1,4 @@
+class PatrolPoint {
+
+  String id;
+}
