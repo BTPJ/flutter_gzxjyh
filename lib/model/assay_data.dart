@@ -21,6 +21,7 @@ class AssayData {
   User createBy;
   String assayType;
   String itemIds;
+  String siteName;
   List<AssayDataDetail> tList;
   List<AssayDataDetail> swList;
   List<AssayDataDetail> wnList;
@@ -35,26 +36,27 @@ class AssayData {
     }
   }
 
-  AssayData.fromParams(
-      {this.isNewRecord,
-      this.assayer,
-      this.collectTime,
-      this.createDate,
-      this.id,
-      this.name,
-      this.siteId,
-      this.status,
-      this.statusName,
-      this.updateDate,
-      this.audit,
-      this.createBy,
-      this.assayType,
-      this.itemIds,
-      this.tList,
-      this.swList,
-      this.wnList,
-      this.tsList,
-      });
+  AssayData.fromParams({
+    this.isNewRecord,
+    this.assayer,
+    this.collectTime,
+    this.createDate,
+    this.id,
+    this.name,
+    this.siteId,
+    this.status,
+    this.statusName,
+    this.updateDate,
+    this.audit,
+    this.createBy,
+    this.assayType,
+    this.itemIds,
+    this.siteName,
+    this.tList,
+    this.swList,
+    this.wnList,
+    this.tsList,
+  });
 
   AssayData.fromJson(jsonRes) {
     isNewRecord = jsonRes['isNewRecord'];
@@ -75,35 +77,38 @@ class AssayData {
         : new User.fromJson(jsonRes['createBy']);
     assayType = jsonRes['assayType'];
     itemIds = jsonRes['itemIds'];
+    siteName = jsonRes['siteName'];
     tList = jsonRes['tList'] == null ? null : [];
 
-    for (var tListItem in tList == null ? [] : jsonRes['tList']){
-      tList.add(tListItem == null ? null : new AssayDataDetail.fromJson(tListItem));
+    for (var tListItem in tList == null ? [] : jsonRes['tList']) {
+      tList.add(
+          tListItem == null ? null : new AssayDataDetail.fromJson(tListItem));
     }
 
     swList = jsonRes['swList'] == null ? null : [];
 
-    for (var swListItem in swList == null ? [] : jsonRes['swList']){
-      swList.add(swListItem == null ? null : new AssayDataDetail.fromJson(swListItem));
+    for (var swListItem in swList == null ? [] : jsonRes['swList']) {
+      swList.add(
+          swListItem == null ? null : new AssayDataDetail.fromJson(swListItem));
     }
 
     wnList = jsonRes['wnList'] == null ? null : [];
 
-    for (var wnListItem in wnList == null ? [] : jsonRes['wnList']){
-      wnList.add(wnListItem == null ? null : new AssayDataDetail.fromJson(wnListItem));
+    for (var wnListItem in wnList == null ? [] : jsonRes['wnList']) {
+      wnList.add(
+          wnListItem == null ? null : new AssayDataDetail.fromJson(wnListItem));
     }
 
     tsList = jsonRes['tsList'] == null ? null : [];
 
-    for (var tsListItem in tsList == null ? [] : jsonRes['tsList']){
-      tsList.add(tsListItem == null ? null : new AssayDataDetail.fromJson(tsListItem));
+    for (var tsListItem in tsList == null ? [] : jsonRes['tsList']) {
+      tsList.add(
+          tsListItem == null ? null : new AssayDataDetail.fromJson(tsListItem));
     }
   }
 
   @override
   String toString() {
-    return 'AssayData{isNewRecord: $isNewRecord, assayer: $assayer, collectTime: $collectTime, createDate: $createDate, id: $id, name: $name, siteId: $siteId, status: $status, statusName: $statusName, updateDate: $updateDate, audit: $audit, createBy: $createBy, assayType: $assayType, itemIds: $itemIds, tList: $tList, swList: $swList, wnList: $wnList, tsList: $tsList}';
+    return 'AssayData{isNewRecord: $isNewRecord, assayer: $assayer, collectTime: $collectTime, createDate: $createDate, id: $id, name: $name, siteId: $siteId, status: $status, statusName: $statusName, updateDate: $updateDate, audit: $audit, createBy: $createBy, assayType: $assayType, itemIds: $itemIds, siteName: $siteName, tList: $tList, swList: $swList, wnList: $wnList, tsList: $tsList}';
   }
-
-
 }

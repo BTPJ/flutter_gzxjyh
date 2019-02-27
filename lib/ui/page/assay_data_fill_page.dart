@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
+import 'package:flutter_gzxjyh/event/event_code.dart';
+import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
@@ -9,8 +11,11 @@ import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/page/assay_item_page.dart';
 import 'package:flutter_gzxjyh/ui/page/choose_sewage_page.dart';
+import 'package:flutter_gzxjyh/ui/page/fill_assay_data_page.dart';
+import 'package:flutter_gzxjyh/ui/page/fill_assay_data_water_temp_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
+import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -52,201 +57,219 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
       ),
       body: Column(
         children: <Widget>[
-          /// 污水厂
-          MaterialButton(
-            padding: EdgeInsets.only(
-                top: ScreenUtil().setHeight(15),
-                bottom: ScreenUtil().setHeight(15),
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                  child: Text(
-                    "污水厂",
-                    style: TextStyle(
-                      color: MyColors.FF333333,
-                      fontSize: ScreenUtil().setSp(16),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  /// 污水厂
+                  MaterialButton(
+                    padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(15),
+                        bottom: ScreenUtil().setHeight(15),
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin:
+                          EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+                          child: Text(
+                            "污水厂",
+                            style: TextStyle(
+                              color: MyColors.FF333333,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _mSite == null ? "请选择" : _mSite.name,
+                            style: TextStyle(
+                              color: _mSite == null
+                                  ? MyColors.FF999999
+                                  : MyColors.FF1296DB,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        Icon(Icons.keyboard_arrow_right)
+                      ],
                     ),
+                    onPressed: () {
+                      /// 跳转污水厂选择
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  ChooseSewagePage(chooseSite: _mSite)))
+                          .then((site) {
+                        if (site != null) {
+                          _mSite = site;
+                          _loadAssayItem();
+                        }
+                      });
+                    },
                   ),
-                ),
-                Expanded(
-                  child: Text(
-                    _mSite == null ? "请选择" : _mSite.name,
-                    style: TextStyle(
-                      color: _mSite == null
-                          ? MyColors.FF999999
-                          : MyColors.FF1296DB,
-                      fontSize: ScreenUtil().setSp(16),
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-                Icon(Icons.keyboard_arrow_right)
-              ],
-            ),
-            onPressed: () {
-              /// 跳转污水厂选择
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ChooseSewagePage(chooseSite: _mSite)))
-                  .then((site) {
-                _mSite = site;
-                _loadAssayItem();
-              });
-            },
-          ),
 
-          Container(
-            padding: EdgeInsets.only(
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Divider(height: 1.0),
-          ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Divider(height: 1.0),
+                  ),
 
-          /// 化验人员
-          Container(
-            padding: EdgeInsets.only(
-                top: ScreenUtil().setHeight(15),
-                bottom: ScreenUtil().setHeight(15),
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                  child: Text(
-                    "化验人员",
-                    style: TextStyle(
-                      color: MyColors.FF333333,
-                      fontSize: ScreenUtil().setSp(16),
+                  /// 化验人员
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(15),
+                        bottom: ScreenUtil().setHeight(15),
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin:
+                          EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+                          child: Text(
+                            "化验人员",
+                            style: TextStyle(
+                              color: MyColors.FF333333,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: _assayPeopleController,
+                            decoration: InputDecoration(
+                              hintText: "请填写",
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                            style: TextStyle(
+                              color: MyColors.FF1296DB,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _assayPeopleController,
-                    decoration: InputDecoration(
-                      hintText: "请填写",
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    style: TextStyle(
-                      color: MyColors.FF1296DB,
-                      fontSize: ScreenUtil().setSp(16),
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              ],
-            ),
-          ),
 
-          Container(
-            padding: EdgeInsets.only(
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Divider(height: 1.0),
-          ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Divider(height: 1.0),
+                  ),
 
-          /// 化验日期
-          MaterialButton(
-            padding: EdgeInsets.only(
-                top: ScreenUtil().setHeight(15),
-                bottom: ScreenUtil().setHeight(15),
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                  child: Text(
-                    "化验日期",
-                    style: TextStyle(
-                      color: MyColors.FF333333,
-                      fontSize: ScreenUtil().setSp(16),
+                  /// 化验日期
+                  MaterialButton(
+                    padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(15),
+                        bottom: ScreenUtil().setHeight(15),
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin:
+                          EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+                          child: Text(
+                            "化验日期",
+                            style: TextStyle(
+                              color: MyColors.FF333333,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _chooseDate == null ? "请选择" : _chooseDate,
+                            style: TextStyle(
+                              color: _chooseDate == null
+                                  ? MyColors.FF999999
+                                  : MyColors.FF1296DB,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        Icon(Icons.keyboard_arrow_right)
+                      ],
                     ),
+                    onPressed: () => _showTimePicker(),
                   ),
-                ),
-                Expanded(
-                  child: Text(
-                    _chooseDate == null ? "请选择" : _chooseDate,
-                    style: TextStyle(
-                      color: _chooseDate == null
-                          ? MyColors.FF999999
-                          : MyColors.FF1296DB,
-                      fontSize: ScreenUtil().setSp(16),
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-                Icon(Icons.keyboard_arrow_right)
-              ],
-            ),
-            onPressed: () => _showTimePicker(),
-          ),
 
-          Divider(height: 1.0),
+                  Divider(height: 1.0),
 
-          Container(
-            color: MyColors.FFF0F0F0,
-            padding: EdgeInsets.only(
-                top: ScreenUtil().setHeight(15),
-                bottom: ScreenUtil().setHeight(15),
-                left: ScreenUtil().setWidth(20),
-                right: ScreenUtil().setWidth(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "化验分析项",
-                  style: TextStyle(
-                    color: MyColors.FF999999,
-                    fontSize: ScreenUtil().setSp(15),
-                  ),
-                ),
-                InkWell(
-                  child: Text(
-                    "添加分析项 +",
-                    style: TextStyle(
-                      color: MyColors.FF61A2CA,
-                      fontSize: ScreenUtil().setSp(15),
-                    ),
-                  ),
-                  onTap: () {
-                    //进入分析项
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    AssayItemPage(mCheckedList: _mCheckedList)))
-                        .then((checkedList) {
+                  Container(
+                    color: MyColors.FFF0F0F0,
+                    padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(15),
+                        bottom: ScreenUtil().setHeight(15),
+                        left: ScreenUtil().setWidth(20),
+                        right: ScreenUtil().setWidth(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "化验分析项",
+                          style: TextStyle(
+                            color: MyColors.FF999999,
+                            fontSize: ScreenUtil().setSp(15),
+                          ),
+                        ),
+                        InkWell(
+                          child: Text(
+                            "添加分析项 +",
+                            style: TextStyle(
+                              color: MyColors.FF61A2CA,
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                          ),
+                          onTap: () {
+                            //进入分析项
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => AssayItemPage(
+                                        mCheckedList: _mCheckedList)))
+                                .then((checkedList) {
 //                      _mCheckedList.clear();
 //                      _mCheckedList.addAll(checkedList);
-                      _bindData();
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
+                              _bindData();
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
 
-          /// 列表
-          Expanded(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Offstage(
-                  child: EmptyView(msg: _emptyText),
-                  offstage: _list.isNotEmpty,
-                ),
-                ListView.builder(
-                  itemBuilder: _renderItem,
-                  itemCount: _list.length * 2,
-                ),
-              ],
+                  /// 列表
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Offstage(
+                        child: Container(
+                          height: ScreenUtil().setHeight(270),
+                          child: EmptyView(msg: _emptyText),
+                        ),
+                        offstage: _list.isNotEmpty,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: _renderItem,
+                        itemCount: _list.length * 2,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -274,7 +297,7 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
 
             /// 确认
             onTap: () {
-              //Navigator.pop(context, widget.mCheckedList);
+              _saveAssayData();
             },
           )
         ],
@@ -284,7 +307,7 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
 
   /// 渲染Item
   Widget _renderItem(BuildContext context, int index) {
-    if (index.isOdd && index != _list.length * 2 - 1) {
+    if (index.isOdd && index != _list.length * 2) {
       return Container(
         padding: EdgeInsets.only(
             left: ScreenUtil().setWidth(20), right: ScreenUtil().setWidth(20)),
@@ -314,7 +337,9 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
           ),
           Expanded(
             child: Text(
-            _convert(_list[index]) == "" ? "请选择" : _convert(_list[index]),
+              _convert(_list[index]) == "" ? "请选择" : _convert(_list[index]),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: _mSite == null ? MyColors.FF999999 : MyColors.FF1296DB,
                 fontSize: ScreenUtil().setSp(16),
@@ -328,13 +353,24 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
       onPressed: () {
         /// 条目点击
         Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => ChooseSewagePage(chooseSite: _mSite)))
-            .then((site) {
-          _mSite = site;
-          _loadAssayItem();
-        });
+            context,
+            MaterialPageRoute(
+                builder: (_) => _list[index].relationId == "1"
+                    ? FillAssayDataWaterTempPage(mList: _list[index].assayList)
+                    : FillAssayDataPage(mList: _list[index].assayList))).then(
+                (assayDataDetailList) {
+              /// 条目点击带参数返回
+              setState(() {
+                if (assayDataDetailList != null) {
+                  for (int i = 0; i < assayDataDetailList.length; i++) {
+                    _list[index].assayList[i].dataVal =
+                        assayDataDetailList[i].dataVal;
+                    _list[index].assayList[i].remarks =
+                        assayDataDetailList[i].remarks;
+                  }
+                }
+              });
+            });
       },
     );
   }
@@ -468,7 +504,7 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
           content = "";
         } else {
           content =
-              "${item.assayList[0].dataVal}${item.unit == null ? "℃" : item.unit}";
+          "${item.assayList[0].dataVal}${item.unit == null ? "℃" : item.unit}";
         }
       } else {
         content = "";
@@ -483,5 +519,34 @@ class AssayDataFillPageState extends State<AssayDataFillPage> {
     }
 
     return content;
+  }
+
+  /// 上报化验数据
+  _saveAssayData() {
+    String people = _assayPeopleController.text.toString().trim();
+    if (_mSite == null) return ToastUtil.showShort("请先选择污水厂");
+    if (people == "") return ToastUtil.showShort("请先选择化验人员");
+    if (_chooseDate == "") return ToastUtil.showShort("请先选择日期");
+    if (_list == null || _list.isEmpty) return ToastUtil.showShort("请先选择分析项");
+
+    List<AssayDataDetail> data = List();
+    for (var assay in _list) {
+      if (assay.assayList != null) {
+        for (var assayDataDetail in assay.assayList) {
+          data.add(assayDataDetail);
+        }
+      }
+    }
+
+    NetUtil.instance.post(Api.instance.saveAssayData, (body) {
+      ToastUtil.showShort("上报成功");
+      EventManager.instance.eventBus.fire(EventCode(EventCode.OPERATE_ASSAY_DATA_SUCCESS));
+      Navigator.pop(context);
+    }, params: {
+      'siteId': _mSite.id,
+      'assayer': people,
+      'collectTime': _chooseDate,
+      'dataJson': data.toString(),
+    });
   }
 }

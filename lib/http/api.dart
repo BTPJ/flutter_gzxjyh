@@ -106,4 +106,10 @@ class Api {
 
   /// 生产管理 - 化验数据填报 -新增界面 -选择分析项目 - 确认分析项
   String get loadAssayItem => '${home}gzxj/produce/gzxjAssayData/itemFormSave';
+
+  /// 上报化验数据
+  String get saveAssayData => '${home}gzxj/produce/gzxjAssayData/saveOfApp';
+
+  /// 化验数据详情
+  String get loadAssayDataDetail => '${home}gzxj/produce/gzxjAssayData/formDetail';
 }

@@ -75,4 +75,18 @@ class DateUtil {
     return DateTime.tryParse(dateStr).millisecondsSinceEpoch -
         DateTime.now().millisecondsSinceEpoch;
   }
+
+  /// 将长时间格式变为短时间格式(例：2018-12-04 19:08:03 改为 2018-12-04)
+  /// @param timeStr 要修改的时间 yyyy-MM-dd HH:mm:ss
+  /// @return 修改后的时间yyyy-MM-dd（报错返回本身或null返回"--"）
+  static String long2ShortDateStr(String timeStr) {
+    if(timeStr == null){
+      return "--";
+    }
+    try{
+      return timeStr.substring(0,10);
+    }catch(e){
+      return "--";
+    }
+  }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/notify_info.dart';
+import 'package:flutter_gzxjyh/ui/page/assay_data_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/assay_data_fill_page.dart';
 import 'package:flutter_gzxjyh/ui/page/notify_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/personal_center_page.dart';
@@ -38,6 +39,10 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
     EventManager.instance.eventBus.on<EventCode>().listen((event) {
       if (event.code == EventCode.READ_NOTIFY) {
         _loadUnReadNotifyList();
+      }
+
+      if (event.code == EventCode.OPERATE_ASSAY_DATA_SUCCESS) {
+        _loadAssayDataList();
       }
     });
   }
@@ -82,9 +87,9 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
                 Expanded(
                     child: _unReadNotifyList.isEmpty
                         ? Text('暂无未阅读的通知公告',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: ScreenUtil().setSp(15)))
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: ScreenUtil().setSp(15)))
                         : _buildMarquee()),
               ],
             ),
@@ -122,7 +127,7 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
                           height: ScreenUtil().setHeight(22)),
                       Container(
                         margin:
-                            EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+                        EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                         child: Text(
                           "化验数据填报",
                           style: TextStyle(
@@ -147,18 +152,18 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())
                 : Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Offstage(child: EmptyView(), offstage: _list.isNotEmpty),
-                      RefreshIndicator(
-                          child: ListView.builder(
-                              // 保持ListView任何情况都能滚动，解决在RefreshIndicator的兼容问题(列表未铺满时无法上拉)
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemBuilder: _renderItem,
-                              itemCount: _list.length),
-                          onRefresh: _onRefresh)
-                    ],
-                  ),
+              alignment: Alignment.center,
+              children: <Widget>[
+                Offstage(child: EmptyView(), offstage: _list.isNotEmpty),
+                RefreshIndicator(
+                    child: ListView.builder(
+                      // 保持ListView任何情况都能滚动，解决在RefreshIndicator的兼容问题(列表未铺满时无法上拉)
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemBuilder: _renderItem,
+                        itemCount: _list.length * 2),
+                    onRefresh: _onRefresh)
+              ],
+            ),
           )
         ],
       ),
@@ -235,7 +240,7 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
                 Text(
                   assayData.createDate,
                   style: TextStyle(
-                    color: const Color(0xff999999),
+                    color: MyColors.FF999999,
                     fontSize: ScreenUtil().setSp(14),
                   ),
                 )
@@ -246,10 +251,11 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
       ),
       onTap: () {
         //TODO 进入详情
-//        Navigator.push(
-//            context,
-//            MaterialPageRoute(
-//                builder: (_) => MaterialOrderDetailPage(id: materialApply.id)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    AssayDataDetailPage(assayDataId: _list[index].id)));
       },
     );
   }
@@ -264,7 +270,7 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
         _list.clear();
         _list.addAll(list);
       });
-    }, params: {'qType': "1"});
+    }, params: {"qType": "1"});
   }
 
   /// 渲染未阅读消息的跑马灯效果
