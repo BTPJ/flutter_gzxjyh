@@ -8,6 +8,7 @@ import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/user.dart';
 import 'package:flutter_gzxjyh/ui/page/change_ip_page.dart';
+import 'package:flutter_gzxjyh/ui/page/main_assay_manager_page.dart';
 import 'package:flutter_gzxjyh/ui/page/main_assay_page.dart';
 import 'package:flutter_gzxjyh/ui/page/main_patrol_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_dialog.dart';
@@ -201,6 +202,13 @@ class LoginState extends State<LoginPage> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => MainPatrolPage()),
+                (route) => route == null);
+            break;
+          case '6': // 化验管理人员
+            SpUtil.putBool(SpKey.IS_AUTO_LOGIN, true);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => MainAssayManagerPage()),
                 (route) => route == null);
             break;
           case '7': // 化验人员

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/ui/page/contact_page.dart';
 import 'package:flutter_gzxjyh/ui/page/data_query_page.dart';
-import 'package:flutter_gzxjyh/ui/page/home_assay_tab_page.dart';
+import 'package:flutter_gzxjyh/ui/page/home_assay_manager_tab_page.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// 化验类主页,底部为三标签
-class MainAssayPage extends StatefulWidget {
+/// 化验类主页,底部为三标签(经理)
+class MainAssayManagerPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => MainAssayPageState();
+  State<MainAssayManagerPage> createState() => _MainAssayManagerPageState();
 }
 
-class MainAssayPageState extends State<MainAssayPage> {
+class _MainAssayManagerPageState extends State<MainAssayManagerPage> {
+
   int _tabIndex = 0;
 
   /// tab的图片
@@ -66,7 +67,7 @@ class MainAssayPageState extends State<MainAssayPage> {
     ];
 
     _childPages = [
-      HomeAssayTabPage(),
+      HomeAssayManagerTabPage(),
       DataQueryPage(),
       ContactPage()
     ];

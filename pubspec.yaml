@@ -84,6 +84,7 @@ flutter:
   - images/ic_test.png
   - images/ic_circle_check_blue.png
   - images/ic_circle_check_gray.png
+  - images/ic_pend_test.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
