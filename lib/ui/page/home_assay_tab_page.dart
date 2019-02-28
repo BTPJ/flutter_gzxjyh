@@ -251,7 +251,7 @@ class HomeAssayTabPageState extends State<HomeAssayTabPage> {
         ),
       ),
       onTap: () {
-        //TODO 进入详情
+        // 进入详情
         Navigator.push(
             context,
             MaterialPageRoute(

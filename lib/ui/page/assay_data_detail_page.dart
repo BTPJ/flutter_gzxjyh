@@ -5,8 +5,10 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
 import 'package:flutter_gzxjyh/model/assay_data_detail.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
+import 'package:flutter_gzxjyh/ui/page/assay_data_audit_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
+import 'package:flutter_gzxjyh/utils/user_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 化验数据详情
@@ -249,7 +251,7 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
         /// 审核
         Offstage(
           // 控制显示,false为显示
-          offstage: true,
+          offstage: UserManager.instance.user.positionId != "6",
           child: InkWell(
             child: Container(
               color: Colors.white,
@@ -274,7 +276,10 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
 
             /// 审核
             onTap: () {
-              //_saveAssayData();
+              if (_assayData != null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => AssayDataAuditPage()));
+              }
             },
           ),
         )
@@ -588,7 +593,6 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
   }
 
   Color _addItemValueColor(AssayDataDetail assay) {
-
     //针对污泥脱水后效果数据修改(* 100)
     double dataVal = assay.dataVal;
     if ((assay.relationId == "6" || assay.relationId == "7") &&
@@ -607,8 +611,7 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
         return MyColors.FF000000;
       }
     } else if (assay.maxVal != null && assay.minVal != null) {
-      if (assay.minVal - dataVal <= 0 &&
-          assay.maxVal - dataVal >= 0) {
+      if (assay.minVal - dataVal <= 0 && assay.maxVal - dataVal >= 0) {
         return MyColors.FF000000;
       } else {
         return MyColors.FFE51C1C;

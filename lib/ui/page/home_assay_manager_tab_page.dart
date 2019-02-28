@@ -7,6 +7,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/notify_info.dart';
+import 'package:flutter_gzxjyh/ui/page/assay_data_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/notify_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/personal_center_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
@@ -139,7 +140,14 @@ class _HomeAssayManagerTabPageState extends State<HomeAssayManagerTabPage> {
   /// 渲染列表项
   Widget _buildItem(BuildContext context, int index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        // 进入详情
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    AssayDataDetailPage(assayDataId: _list[index].id)));
+      },
       child: Column(
         children: <Widget>[
           Container(
