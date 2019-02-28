@@ -41,7 +41,7 @@ class LoginState extends State<LoginPage> {
     await SpUtil.getInstance();
     _loginNameController.text = SpUtil.getString(SpKey.LOGIN_NAME);
     _passwordController.text = SpUtil.getString(SpKey.LOGIN_PASSWORD);
-    if (SpUtil.getBool(SpKey.IS_AUTO_LOGIN)) {
+    if (SpUtil.getBool(SpKey.IS_AUTO_LOGIN) ?? false) {
       _login();
     }
   }
@@ -176,6 +176,9 @@ class LoginState extends State<LoginPage> {
 
     /// 每次登录前需要清除之前的缓存
     /// 不直接 NetUtil.instance.defaultCookieJar.deleteAll()是因为会报错(暂不明原因)
+    if(Api.selIp == null){
+      Api.selIp = Api.DEFAULT_IP;
+    }
     List hostAndPort = Api.selIp.split(':');
     NetUtil.instance.defaultCookieJar
         .delete(Uri(host: hostAndPort[0], port: int.parse(hostAndPort[1])));
