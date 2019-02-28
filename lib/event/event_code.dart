@@ -12,6 +12,9 @@ class EventCode {
   /// 审核化验数据成功
   static const OPERATE_ASSAY_DATA_SUCCESS = 3;
 
+  /// 审核化验数据成功
+  static const AUDIT_PRODUCE_OR_ASSAY_DATA = 4;
+
   int code;
   String msg;
 

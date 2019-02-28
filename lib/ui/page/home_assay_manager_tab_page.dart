@@ -45,6 +45,10 @@ class _HomeAssayManagerTabPageState extends State<HomeAssayManagerTabPage> {
       if (event.code == EventCode.OPERATE_ASSAY_DATA_SUCCESS) {
         _loadAssayDataList();
       }
+
+      if (event.code == EventCode.AUDIT_PRODUCE_OR_ASSAY_DATA) {
+        _onRefresh();
+      }
     });
   }
 

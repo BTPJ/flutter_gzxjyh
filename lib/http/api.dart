@@ -112,4 +112,7 @@ class Api {
 
   /// 化验数据详情
   String get loadAssayDataDetail => '${home}gzxj/produce/gzxjAssayData/formDetail';
+
+  /// 生产/化验数据审核
+  String get auditProduceOrAssayData => '${home}gzxj/produce/gzxjDataAudit/save';
 }

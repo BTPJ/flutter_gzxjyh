@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
+import 'package:flutter_gzxjyh/event/event_code.dart';
+import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
@@ -31,6 +33,13 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
     super.initState();
 
     _loadAssayDataDetail();
+
+    /// 监听审核消息
+    EventManager.instance.eventBus.on<EventCode>().listen((event) {
+      if (event.code == EventCode.AUDIT_PRODUCE_OR_ASSAY_DATA) {
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -245,7 +254,7 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
 
         Offstage(
             // 控制显示,false为显示
-            offstage: true,
+            offstage: UserManager.instance.user.positionId != "6",
             child: Divider(height: 1.0)),
 
         /// 审核
@@ -277,8 +286,11 @@ class _AssayDataDetailPageState extends State<AssayDataDetailPage> {
             /// 审核
             onTap: () {
               if (_assayData != null) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => AssayDataAuditPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            AssayDataAuditPage(mAssayData: _assayData)));
               }
             },
           ),
