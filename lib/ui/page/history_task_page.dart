@@ -6,6 +6,7 @@ import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/maintain_task.dart';
 import 'package:flutter_gzxjyh/model/patrol_task.dart';
 import 'package:flutter_gzxjyh/model/task.dart';
+import 'package:flutter_gzxjyh/ui/page/patrol_task_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
@@ -225,7 +226,16 @@ class _HistoryTaskState extends State<HistoryTaskPage> {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        if (_taskType == 0) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => PatrolTaskDetailPage(
+                        patrolTaskId: task.patrolTask?.id,
+                      )));
+        }
+      },
     );
   }
 

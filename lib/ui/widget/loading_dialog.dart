@@ -5,9 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// 自定义的LoadingDialog
 // ignore: must_be_immutable
 class LoadingDialog extends Dialog {
-  String text;
+  final String text;
 
-  LoadingDialog({Key key, @required this.text}) : super(key: key);
+  LoadingDialog({Key key, String text})
+      : text = text ?? '加载中...',
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class LoadingDialog extends Dialog {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CupertinoActivityIndicator(radius: ScreenUtil().setWidth(16),),
+              CupertinoActivityIndicator(
+                radius: ScreenUtil().setWidth(16),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: ScreenUtil().setHeight(15)),
                 child: Text(

@@ -12,6 +12,7 @@ import 'package:flutter_gzxjyh/model/patrol_task.dart';
 import 'package:flutter_gzxjyh/model/task.dart';
 import 'package:flutter_gzxjyh/ui/page/dossier_report_page.dart';
 import 'package:flutter_gzxjyh/ui/page/notify_detail_page.dart';
+import 'package:flutter_gzxjyh/ui/page/patrol_task_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/personal_center_page.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_data_report_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
@@ -296,7 +297,15 @@ class IndexPatrolState extends State<IndexPatrolPage> {
     Task task = _tasks[index];
     bool isPatrolTask = task.type == 0;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (isPatrolTask) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) =>
+                      PatrolTaskDetailPage(patrolTaskId: task.patrolTask?.id)));
+        }
+      },
       child: Column(
         children: <Widget>[
           Container(

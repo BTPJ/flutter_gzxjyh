@@ -106,4 +106,7 @@ class Api {
 
   /// 生产管理 - 化验数据填报 -新增界面 -选择分析项目 - 确认分析项
   String get loadAssayItem => '${home}gzxj/produce/gzxjAssayData/itemFormSave';
+
+  /// 获取巡检任务详情
+  String get getPatrolTaskDetail => '${home}gzxj/xj/gzxjPatrolTask/getAppInfo';
 }
