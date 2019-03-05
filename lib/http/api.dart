@@ -118,4 +118,7 @@ class Api {
 
   /// 实时监测分页数据
   String get loadSiteInfoPageList => '${home}gzxj/sjjc/rest/sitePage';
+
+  /// 实时监测分页数据
+  String get loadSiteDetail => '${home}gzxj/sjjc/rest/siteDetail';
 }
