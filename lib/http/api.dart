@@ -115,4 +115,7 @@ class Api {
 
   /// 生产/化验数据审核
   String get auditProduceOrAssayData => '${home}gzxj/produce/gzxjDataAudit/save';
+
+  /// 实时监测分页数据
+  String get loadSiteInfoPageList => '${home}gzxj/sjjc/rest/sitePage';
 }

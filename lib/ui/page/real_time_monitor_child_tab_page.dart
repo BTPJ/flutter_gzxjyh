@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
+import 'package:flutter_gzxjyh/http/api.dart';
+import 'package:flutter_gzxjyh/http/net_util.dart';
+import 'package:flutter_gzxjyh/model/base_resp.dart';
+import 'package:flutter_gzxjyh/model/site_info.dart';
+import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 
 /// 首页(巡检人员)-实时监测Tab-实时监测Tab
 class RealTimeMonitorChildTabPage extends StatefulWidget {
@@ -12,6 +18,45 @@ class RealTimeMonitorChildTabPage extends StatefulWidget {
 class _RealTimeMonitorChildTabPageState
     extends State<RealTimeMonitorChildTabPage> {
   GlobalKey _myKey = new GlobalKey();
+
+  List<SiteInfo> _list = List();
+
+  /// 是否正在加载
+  bool _isLoading = true;
+
+  /// 当前页
+  var _pageNo = 1;
+
+  /// 每次请求的数量
+  static const int _PAGE_SIZE = 10;
+
+  /// 列表总数
+  var _listTotalSize = 0;
+
+  /// 滑动控制器
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _initScrollController();
+    _onRefresh();
+  }
+
+  /// 初始化ScrollController
+  _initScrollController() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      // 最大的滚动距离
+      var maxScrollPixels = _scrollController.position.maxScrollExtent;
+      // 已向下滚动的距离
+      var nowScrollPixels = _scrollController.position.pixels;
+      // 对比判定是否滚动到底从而分页加载
+      if (nowScrollPixels == maxScrollPixels && _list.length < _listTotalSize) {
+        _onLoadMore();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +72,25 @@ class _RealTimeMonitorChildTabPageState
               /// 监测区域
               Expanded(
                   child: InkWell(
-                      child: Center(
-                        child: Container(
-                          height: ScreenUtil().setHeight(40),
-                          child: Row(
-                            children: <Widget>[
-                              Text("监测区域",
-                                  style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(14),
-                                      color: _popBuilder
-                                          ? MyColors.FF2EAFFF
-                                          : MyColors.FF333333)),
-                              Icon(Icons.arrow_drop_down,
-                                  color: _popBuilder
-                                      ? MyColors.FF2EAFFF
-                                      : MyColors.FF333333)
-                            ],
-                          ),
+                      child: Container(
+                        height: ScreenUtil().setHeight(40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text("监测区域",
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(14),
+                                    color: _popBuilder
+                                        ? MyColors.FF2EAFFF
+                                        : MyColors.FF333333)),
+                            Icon(Icons.arrow_drop_down,
+                                color: _popBuilder
+                                    ? MyColors.FF2EAFFF
+                                    : MyColors.FF333333)
+                          ],
                         ),
                       ),
-                      onTap: (){
-
+                      onTap: () {
                         showDialog<Null>(
                           context: context,
                           barrierDismissible: false,
@@ -55,7 +98,8 @@ class _RealTimeMonitorChildTabPageState
                             return Container(
                               //height: _myKey.currentContext.size.height+ScreenUtil.bottomBarHeight,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("1"),
                                   Text("2"),
@@ -66,7 +110,6 @@ class _RealTimeMonitorChildTabPageState
                         ).then((val) {
                           print(val);
                         });
-
                       })),
 
               Container(
@@ -87,7 +130,7 @@ class _RealTimeMonitorChildTabPageState
                   onSelected: (position) {
                     _siteTypeIndex = position;
                     _popBuilder = false;
-                    setState(() {});
+                    _onRefresh();
                   },
                   onCanceled: () {
                     _popBuilder = false;
@@ -98,7 +141,10 @@ class _RealTimeMonitorChildTabPageState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(_siteTypeList[_siteTypeIndex],
+                        Text(
+                            _siteTypeIndex == 0
+                                ? "站点类型"
+                                : _siteTypeList[_siteTypeIndex],
                             style: TextStyle(
                                 fontSize: ScreenUtil().setSp(14),
                                 color: _popBuilder
@@ -118,7 +164,24 @@ class _RealTimeMonitorChildTabPageState
         ),
 
         /// 列表
-
+        Expanded(
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Offstage(child: EmptyView(), offstage: _list.isNotEmpty),
+                    RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        child: ListView.builder(
+                            // 保持ListView任何情况都能滚动，解决在RefreshIndicator的兼容问题(列表未铺满时无法下拉)
+                            physics: AlwaysScrollableScrollPhysics(),
+                            controller: _scrollController,
+                            itemBuilder: _renderItem,
+                            itemCount: _list.length * 2 + 1))
+                  ],
+                ),
+        ),
       ],
     );
   }
@@ -162,5 +225,158 @@ class _RealTimeMonitorChildTabPageState
     _popBuilder = true;
     setState(() {});
     return list;
+  }
+
+  /// 渲染Item
+  Widget _renderItem(BuildContext context, int index) {
+    if (index == _list.length * 2) {
+      if (_listTotalSize > _PAGE_SIZE) {
+        return LoadingMore(haveMore: _list.length < _listTotalSize);
+      } else {
+        /// 当列表不够上拉时，返回空布局
+        return Container();
+      }
+    }
+
+    if (index.isOdd && index != _list.length * 2) {
+      return Container(
+        padding: EdgeInsets.only(
+            left: ScreenUtil().setWidth(20), right: ScreenUtil().setWidth(20)),
+        child: Divider(height: 1.0),
+      );
+    }
+
+    index = index ~/ 2;
+
+    return InkWell(
+      child: Container(
+        padding: EdgeInsets.only(
+            top: ScreenUtil().setHeight(15),
+            bottom: ScreenUtil().setHeight(15),
+            left: ScreenUtil().setWidth(20),
+            right: ScreenUtil().setWidth(20)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ///
+            Row(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: _list[index].statusColor,
+                      //border: Border.all(color: Colors.grey, width: 1.0),
+                      borderRadius: BorderRadius.circular(4.0)),
+                  width: ScreenUtil().setWidth(50),
+                  height: ScreenUtil().setHeight(24),
+                  child: Center(
+                    child: Text(
+                      _list[index].statusName,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(14),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+
+                ///
+                Expanded(
+                    child: Container(
+                  margin: EdgeInsets.only(
+                    left: ScreenUtil().setWidth(10),
+                    right: ScreenUtil().setWidth(10),
+                  ),
+                  child: Text(
+                    _list[index].name ?? "",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF5988A4,
+                    ),
+                  ),
+                )),
+
+                ///
+                Text(
+                  _list[index].updateDate ?? "",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(14),
+                    color: MyColors.FF999999,
+                  ),
+                )
+              ],
+            ),
+
+            ///
+            Container(
+              margin: EdgeInsets.only(
+                top: ScreenUtil().setHeight(15),
+              ),
+              child: Text(
+                _contentItem(_list[index]),
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(16),
+                  color: MyColors.FF000000,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      onTap: () {
+        /// 条目点击
+      },
+    );
+  }
+
+  /// 下拉刷新
+  Future<Null> _onRefresh() async {
+    _pageNo = 1;
+    _list.clear();
+    loadSiteInfoPageList(_pageNo);
+    return null;
+  }
+
+  /// 上拉加载
+  _onLoadMore() {
+    _pageNo++;
+    loadSiteInfoPageList(_pageNo);
+  }
+
+  /// 服务器请求加载站点列表
+  loadSiteInfoPageList(int pageNo) {
+    NetUtil.instance.get(Api.instance.loadSiteInfoPageList, (res) {
+      _isLoading = false;
+      var page = BaseResp<SiteInfoPage>(
+          res, (jsonRes) => SiteInfoPage.fromJson(jsonRes)).resultObj;
+      _listTotalSize = page.count;
+      var list = page.list ?? List();
+      setState(() {
+        _list.addAll(list);
+      });
+    }, params: {
+      'pageNo': '$pageNo',
+      'pageSize': '$_PAGE_SIZE',
+      'zone.id': "",
+      'type': _siteTypeIndex == 0 ? "" : "$_siteTypeIndex",
+    });
+  }
+
+  String _contentItem(SiteInfo item) {
+    String content;
+    if (item.currentData != null && item.currentData.isNotEmpty) {
+      for (int i = 0; i < item.currentData.length; i++) {
+        if (i == 0) {
+          content =
+              "${item.currentData[i].config?.location}${item.currentData[i].config?.typeName}: ${item.currentData[i].value}${item.currentData[i].config?.unit}";
+        } else {
+          content =
+              "$content\n${item.currentData[i].config?.location}${item.currentData[i].config?.typeName}: ${item.currentData[i].value}${item.currentData[i].config?.unit}";
+        }
+      }
+    }
+
+    return content ?? "暂无监测数据";
   }
 }
