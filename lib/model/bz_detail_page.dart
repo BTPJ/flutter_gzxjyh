@@ -4,7 +4,9 @@ import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
+import 'package:flutter_gzxjyh/ui/page/station_alarm_detail.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 /// 泵站详情
 class BZDetailPage extends StatefulWidget {
@@ -158,6 +160,15 @@ class _BZDetailPageState extends State<BZDetailPage> {
                           Icon(Icons.keyboard_arrow_right)
                         ],
                       ),
+                      onTap: () {
+                        if (_siteInfo != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => StationAlarmDetailPage(
+                                      siteInfo: _siteInfo)));
+                        }
+                      },
                     ),
                   )
                 ],
