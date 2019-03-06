@@ -21,12 +21,16 @@ class SiteInfo {
   double longitude;
   double elevation;
   double diameter;
+  double minWater;
   String address;
+  int waterRate;
   String type;
   String status;
   String updateDate;
+  String standard;
   String code;
   String size;
+  String scale;
   String remarks;
   ZoneInfo zone;
   List<MonitorData> currentData;
@@ -39,6 +43,21 @@ class SiteInfo {
         return "异常";
       case '2':
         return "失联";
+      default:
+        return "";
+    }
+  }
+
+  String get standardName {
+    switch (standard) {
+      case '1':
+        return "一级A";
+      case '2':
+        return "一级B";
+      case '3':
+        return "二级";
+      case '4':
+        return "三级";
       default:
         return "";
     }
@@ -63,10 +82,14 @@ class SiteInfo {
       this.typeName,
       this.startDate,
       this.updateDate,
+      this.waterRate,
       this.elevation,
       this.diameter,
+      this.minWater,
       this.code,
       this.size,
+      this.scale,
+      this.standard,
       this.zone,
       this.remarks,
       this.historyWarn});
@@ -85,8 +108,11 @@ class SiteInfo {
     longitude = jsonRes['longitude'];
     elevation = jsonRes['elevation'];
     diameter = jsonRes['diameter'];
+    minWater = jsonRes['minWater'];
+    waterRate = jsonRes['waterRate'];
     isNewRecord = jsonRes['isNewRecord'];
     address = jsonRes['address'];
+    standard = jsonRes['standard'];
     type = jsonRes['type'];
     status = jsonRes['status'];
     name = jsonRes['name'];
@@ -94,6 +120,7 @@ class SiteInfo {
     remarks = jsonRes['remarks'];
     code = jsonRes['code'];
     size = jsonRes['size'];
+    scale = jsonRes['scale'];
     startDate = jsonRes['startDate'];
     updateDate = jsonRes['updateDate'];
     zone =
@@ -107,9 +134,11 @@ class SiteInfo {
 
     currentData = jsonRes['currentData'] == null ? null : [];
 
-    for (var currentDataItem in currentData == null ? [] : jsonRes['currentData']) {
-      currentData.add(
-          currentDataItem == null ? null : new MonitorData.fromJson(currentDataItem));
+    for (var currentDataItem
+        in currentData == null ? [] : jsonRes['currentData']) {
+      currentData.add(currentDataItem == null
+          ? null
+          : new MonitorData.fromJson(currentDataItem));
     }
   }
 
@@ -126,8 +155,7 @@ class SiteInfoPage {
   int pageSize;
   List<SiteInfo> list;
 
-  SiteInfoPage.fromParams(
-      {this.count, this.pageNo, this.pageSize, this.list});
+  SiteInfoPage.fromParams({this.count, this.pageNo, this.pageSize, this.list});
 
   SiteInfoPage.fromJson(jsonRes) {
     count = jsonRes['count'];
