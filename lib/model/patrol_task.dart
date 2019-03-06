@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
 import 'package:flutter_gzxjyh/model/patrol_line.dart';
 import 'package:flutter_gzxjyh/model/patrol_plan.dart';
+import 'package:flutter_gzxjyh/model/patrol_task_flow.dart';
 import 'package:flutter_gzxjyh/model/user.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 
 /// 巡检任务
 class PatrolTask {
+
   bool isNewRecord;
   String createDate;
   String flowId;
@@ -18,33 +20,18 @@ class PatrolTask {
   String planBeginDate;
   String planEndDate;
   String realBeginDate;
+  String realEndDate;
   String status;
   String updateDate;
+  List<PatrolTaskFlow> flowList;
   User createBy;
   PatrolLine line;
   PatrolPlan plan;
   User user;
 
-  PatrolTask.fromParams(
-      {this.isNewRecord,
-      this.createDate,
-      this.flowId,
-      this.id,
-      this.name,
-      this.planBeginDate,
-      this.planEndDate,
-      this.status,
-      this.updateDate,
-      this.createBy,
-      this.line,
-      this.plan,
-      this.user});
+  PatrolTask.fromParams({this.isNewRecord, this.createDate, this.flowId, this.id, this.name, this.planBeginDate, this.planEndDate, this.realBeginDate, this.status, this.updateDate, this.flowList, this.createBy, this.line, this.plan, this.user});
 
-  factory PatrolTask(jsonStr) => jsonStr == null
-      ? null
-      : jsonStr is String
-          ? new PatrolTask.fromJson(json.decode(jsonStr))
-          : new PatrolTask.fromJson(jsonStr);
+  factory PatrolTask(jsonStr) => jsonStr == null ? null : jsonStr is String ? new PatrolTask.fromJson(json.decode(jsonStr)) : new PatrolTask.fromJson(jsonStr);
 
   PatrolTask.fromJson(jsonRes) {
     isNewRecord = jsonRes['isNewRecord'];
@@ -55,23 +42,24 @@ class PatrolTask {
     planBeginDate = jsonRes['planBeginDate'];
     planEndDate = jsonRes['planEndDate'];
     realBeginDate = jsonRes['realBeginDate'];
+    realEndDate = jsonRes['realEndDate'];
     status = jsonRes['status'];
     updateDate = jsonRes['updateDate'];
-    createBy = jsonRes['createBy'] == null
-        ? null
-        : new User.fromJson(jsonRes['createBy']);
-    line = jsonRes['line'] == null
-        ? null
-        : new PatrolLine.fromJson(jsonRes['line']);
-    plan = jsonRes['plan'] == null
-        ? null
-        : new PatrolPlan.fromJson(jsonRes['plan']);
+    flowList = jsonRes['flowList'] == null ? null : [];
+
+    for (var flowListItem in flowList == null ? [] : jsonRes['flowList']){
+      flowList.add(flowListItem == null ? null : new PatrolTaskFlow.fromJson(flowListItem));
+    }
+
+    createBy = jsonRes['createBy'] == null ? null : new User.fromJson(jsonRes['createBy']);
+    line = jsonRes['line'] == null ? null : new PatrolLine.fromJson(jsonRes['line']);
+    plan = jsonRes['plan'] == null ? null : new PatrolPlan.fromJson(jsonRes['plan']);
     user = jsonRes['user'] == null ? null : new User.fromJson(jsonRes['user']);
   }
 
   @override
   String toString() {
-    return '{"isNewRecord": $isNewRecord,"createDate": ${createDate != null ? '${json.encode(createDate)}' : 'null'},"flowId": ${flowId != null ? '${json.encode(flowId)}' : 'null'},"id": ${id != null ? '${json.encode(id)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"planBeginDate": ${planBeginDate != null ? '${json.encode(planBeginDate)}' : 'null'},"planEndDate": ${planEndDate != null ? '${json.encode(planEndDate)}' : 'null'},"status": ${status != null ? '${json.encode(status)}' : 'null'},"updateDate": ${updateDate != null ? '${json.encode(updateDate)}' : 'null'},"createBy": $createBy,"line": $line,"plan": $plan,"user": $user}';
+    return '{"isNewRecord": $isNewRecord,"createDate": ${createDate != null?'${json.encode(createDate)}':'null'},"flowId": ${flowId != null?'${json.encode(flowId)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"planBeginDate": ${planBeginDate != null?'${json.encode(planBeginDate)}':'null'},"planEndDate": ${planEndDate != null?'${json.encode(planEndDate)}':'null'},"realBeginDate": ${realBeginDate != null?'${json.encode(realBeginDate)}':'null'},"status": ${status != null?'${json.encode(status)}':'null'},"updateDate": ${updateDate != null?'${json.encode(updateDate)}':'null'},"flowList": $flowList,"createBy": $createBy,"line": $line,"plan": $plan,"user": $user}';
   }
 
   /// 获取任务状态的字典值

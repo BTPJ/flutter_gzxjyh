@@ -10,8 +10,11 @@ import 'package:flutter_gzxjyh/model/dossier_task.dart';
 import 'package:flutter_gzxjyh/model/notify_info.dart';
 import 'package:flutter_gzxjyh/model/patrol_task.dart';
 import 'package:flutter_gzxjyh/model/task.dart';
+import 'package:flutter_gzxjyh/ui/page/dossier_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/dossier_report_page.dart';
+import 'package:flutter_gzxjyh/ui/page/login_page.dart';
 import 'package:flutter_gzxjyh/ui/page/notify_detail_page.dart';
+import 'package:flutter_gzxjyh/ui/page/patrol_task_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/page/personal_center_page.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_data_report_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
@@ -47,10 +50,18 @@ class IndexPatrolState extends State<IndexPatrolPage> {
     super.initState();
     _onRefresh();
 
-    /// 监听阅读未阅读状态的通知消息
+    /// event_bus监听
     EventManager.instance.eventBus.on<EventCode>().listen((event) {
-      if (event.code == EventCode.READ_NOTIFY) {
-        _loadUnReadNotifyList();
+      switch (event.code) {
+        case EventCode.LOGIN_EXPIRED: // 监听登录过期
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => LoginPage()),
+              (route) => route == null);
+          break;
+        case EventCode.READ_NOTIFY: // 监听阅读未阅读状态的通知消息
+          _loadUnReadNotifyList();
+          break;
       }
     });
   }
@@ -296,7 +307,21 @@ class IndexPatrolState extends State<IndexPatrolPage> {
     Task task = _tasks[index];
     bool isPatrolTask = task.type == 0;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (isPatrolTask) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) =>
+                      PatrolTaskDetailPage(patrolTaskId: task.patrolTask?.id)));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => DossierDetailPage(
+                      dossierId: task.dossierTask?.dossier?.id)));
+        }
+      },
       child: Column(
         children: <Widget>[
           Container(

@@ -121,4 +121,10 @@ class Api {
 
   /// 实时监测分页数据
   String get loadSiteDetail => '${home}gzxj/sjjc/rest/siteDetail';
+
+  /// 获取巡检任务详情
+  String get getPatrolTaskDetail => '${home}gzxj/xj/gzxjPatrolTask/getAppInfo';
+
+  /// 获取案卷详情
+  String get getDossierTaskDetail => '${home}gzxj/aj/gzxjDossierInfo/getAppInfo';
 }
