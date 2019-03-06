@@ -127,4 +127,10 @@ class Api {
 
   /// 获取案卷详情
   String get getDossierTaskDetail => '${home}gzxj/aj/gzxjDossierInfo/getAppInfo';
+
+  /// 实时上报用户地理位置
+  String get reportUserLocation => '${home}gzxj/gzxjUserCurrentStatus/save';
+
+  /// 添加巡检记录
+  String get reportPatrolLocation => '${home}gzxj/xj/gzxjPatrolRecord/save';
 }
