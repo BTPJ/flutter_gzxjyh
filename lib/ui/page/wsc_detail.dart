@@ -700,7 +700,7 @@ class _WSCDetailPageState extends State<WSCDetailPage> {
                           ),
                         ),
 
-                        ///
+                        /// 备注
                         Text(
                           _siteInfo?.remarks ?? "",
                           style: TextStyle(
