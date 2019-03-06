@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
+import 'package:flutter_gzxjyh/event/event_code.dart';
+import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
@@ -501,6 +503,8 @@ class _StationAlarmDetailPageState extends State<StationAlarmDetailPage> {
   _saveAttention(CurrentWarn item) {
     NetUtil.instance.get(Api.instance.saveWarnAttention, (res) {
       _loadCurrentWarnBySite();
+      EventManager.instance.eventBus
+          .fire(EventCode(EventCode.REFRESH_WARN_ATTENTION));
     }, params: {
       'warn.id': item?.id,
     });
@@ -510,6 +514,8 @@ class _StationAlarmDetailPageState extends State<StationAlarmDetailPage> {
   _deleteAttention(CurrentWarn item) {
     NetUtil.instance.get(Api.instance.deleteAttention, (res) {
       _loadCurrentWarnBySite();
+      EventManager.instance.eventBus
+          .fire(EventCode(EventCode.REFRESH_WARN_ATTENTION));
     }, params: {
       'id': item?.attention?.id,
     });
