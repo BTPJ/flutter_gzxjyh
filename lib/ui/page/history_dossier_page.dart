@@ -5,6 +5,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/dict.dart';
 import 'package:flutter_gzxjyh/model/dossier_info.dart';
+import 'package:flutter_gzxjyh/ui/page/dossier_detail_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
@@ -196,7 +197,10 @@ class _HistoryDossierState extends State<HistoryDossierPage> {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => DossierDetailPage(dossierId: dossier?.id))),
     );
   }
 

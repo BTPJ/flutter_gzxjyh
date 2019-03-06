@@ -54,12 +54,6 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
       ],
     );
 
-    /// 通用的分割线
-    var divider = Container(
-        margin: EdgeInsets.only(
-            left: ScreenUtil().setWidth(10), right: ScreenUtil().setWidth(10)),
-        child: Divider(height: 1.0));
-
     var keyTextStyle =
         TextStyle(color: MyColors.FF9D9898, fontSize: ScreenUtil().setSp(16));
     var valueTextStyle =
@@ -80,9 +74,16 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                     children: <Widget>[
                       /// 任务名称
                       Container(
-                        padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
-                        margin:
-                            EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                        // 下面的线（设置下边框）
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: MyColors.FFD9D9D9))),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(14),
+                            right: ScreenUtil().setWidth(14)),
+                        padding: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(18),
+                            bottom: ScreenUtil().setHeight(14)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -97,11 +98,19 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ],
                         ),
                       ),
-                      divider,
 
                       /// 巡检计划
                       Container(
-                        padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
+                        // 下面的线（设置下边框）
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: MyColors.FFD9D9D9))),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(14),
+                            right: ScreenUtil().setWidth(14)),
+                        padding: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(14),
+                            bottom: ScreenUtil().setHeight(14)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -116,11 +125,19 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ],
                         ),
                       ),
-                      divider,
 
                       /// 巡检人
                       Container(
-                        padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
+                        // 下面的线（设置下边框）
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: MyColors.FFD9D9D9))),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(14),
+                            right: ScreenUtil().setWidth(14)),
+                        padding: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(14),
+                            bottom: ScreenUtil().setHeight(14)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -135,15 +152,18 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ],
                         ),
                       ),
-                      divider,
 
                       /// 要求时间
                       Container(
-                        padding: EdgeInsets.fromLTRB(
-                            ScreenUtil().setWidth(14),
-                            ScreenUtil().setHeight(7),
-                            ScreenUtil().setWidth(14),
-                            ScreenUtil().setHeight(7)),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: MyColors.FFD9D9D9))),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(14),
+                            right: ScreenUtil().setWidth(14)),
+                        padding: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(7),
+                            bottom: ScreenUtil().setHeight(7)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -206,7 +226,6 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ],
                         ),
                       ),
-                      divider,
 
                       /// 实际时间
                       Offstage(
@@ -215,11 +234,17 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                             _patrolTask.status == '6' ||
                             _patrolTask.status == '7'),
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              ScreenUtil().setWidth(14),
-                              ScreenUtil().setHeight(7),
-                              ScreenUtil().setWidth(14),
-                              ScreenUtil().setHeight(7)),
+                          // 下面的线（设置下边框）
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom:
+                                      BorderSide(color: MyColors.FFD9D9D9))),
+                          margin: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(14),
+                              right: ScreenUtil().setWidth(14)),
+                          padding: EdgeInsets.only(
+                              top: ScreenUtil().setHeight(7),
+                              bottom: ScreenUtil().setHeight(7)),
                           child: Row(
                             children: <Widget>[
                               Expanded(
@@ -299,14 +324,18 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ),
                         ),
                       ),
-                      Offstage(
-                          offstage: !(_patrolTask.status == '2' ||
-                              _patrolTask.status == '3'),
-                          child: divider),
 
                       /// 巡检点
                       Container(
-                        padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: MyColors.FFD9D9D9))),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtil().setWidth(14),
+                            right: ScreenUtil().setWidth(14)),
+                        padding: EdgeInsets.only(
+                            top: ScreenUtil().setWidth(14),
+                            bottom: ScreenUtil().setWidth(14)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -321,13 +350,21 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ],
                         ),
                       ),
-                      divider,
 
                       /// 线路查看
                       InkWell(
                         onTap: () {},
                         child: Container(
-                          padding: EdgeInsets.all(ScreenUtil().setWidth(14)),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom:
+                                      BorderSide(color: MyColors.FFD9D9D9))),
+                          margin: EdgeInsets.only(
+                              left: ScreenUtil().setWidth(14),
+                              right: ScreenUtil().setWidth(14)),
+                          padding: EdgeInsets.only(
+                              top: ScreenUtil().setWidth(14),
+                              bottom: ScreenUtil().setWidth(14)),
                           child: Row(
                             children: <Widget>[
                               Expanded(
@@ -377,9 +414,8 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                           ),
                         ),
                       ),
-                      divider,
 
-                      /// 流程
+                      /// 操作流程
                       Container(
                           margin:
                               EdgeInsets.only(top: ScreenUtil().setHeight(4)),

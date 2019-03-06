@@ -12,6 +12,7 @@ class DossierTask {
   String createDate;
   String id;
   String planCompleteDate;
+  String realCompleteDate;
   String status;
   String updateDate;
   User createBy;
@@ -40,6 +41,7 @@ class DossierTask {
     createDate = jsonRes['createDate'];
     id = jsonRes['id'];
     planCompleteDate = jsonRes['planCompleteDate'];
+    realCompleteDate = jsonRes['realCompleteDate'];
     status = jsonRes['status'];
     updateDate = jsonRes['updateDate'];
     createBy = jsonRes['createBy'] == null

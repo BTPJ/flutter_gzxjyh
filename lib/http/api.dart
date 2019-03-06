@@ -109,4 +109,7 @@ class Api {
 
   /// 获取巡检任务详情
   String get getPatrolTaskDetail => '${home}gzxj/xj/gzxjPatrolTask/getAppInfo';
+
+  /// 获取案卷详情
+  String get getDossierTaskDetail => '${home}gzxj/aj/gzxjDossierInfo/getAppInfo';
 }

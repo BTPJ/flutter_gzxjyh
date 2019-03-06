@@ -1,5 +1,7 @@
 import 'dart:convert' show json;
 
+import 'package:flutter_gzxjyh/model/dossier_flow.dart';
+import 'package:flutter_gzxjyh/model/dossier_task.dart';
 import 'package:flutter_gzxjyh/model/user.dart';
 
 /// 案卷信息Entity
@@ -13,22 +15,29 @@ class DossierInfo {
   String code;
   String createDate;
   String describe;
+  String files;
   String id;
   String level;
   String levelName;
   String name;
-  String pointId;
-  String pointName;
   String source;
   String sourceName;
   String status;
   String statusName;
-  String taskId;
-  String taskName;
   String type;
   String typeName;
+
+  /// 任务
+  DossierTask task;
+  String taskId;
+  String taskName;
+
+  /// 巡检养护点
+  String pointId;
+  String pointName;
   String updateDate;
   String uploadDate;
+  List<DossierFlow> flowList;
   User createBy;
   User currentDealUser;
   User uploadBy;
@@ -43,22 +52,20 @@ class DossierInfo {
       this.code,
       this.createDate,
       this.describe,
+      this.files,
       this.id,
       this.level,
       this.levelName,
       this.name,
-      this.pointId,
-      this.pointName,
       this.source,
       this.sourceName,
       this.status,
       this.statusName,
-      this.taskId,
-      this.taskName,
       this.type,
       this.typeName,
       this.updateDate,
       this.uploadDate,
+      this.flowList,
       this.createBy,
       this.currentDealUser,
       this.uploadBy});
@@ -79,25 +86,36 @@ class DossierInfo {
     code = jsonRes['code'];
     createDate = jsonRes['createDate'];
     describe = jsonRes['describe'];
+    files = jsonRes['files'];
     id = jsonRes['id'];
+    taskId = jsonRes['taskId'];
+    taskName = jsonRes['taskName'];
+    pointId = jsonRes['pointId'];
+    pointName = jsonRes['pointName'];
     level = jsonRes['level'];
     levelName = jsonRes['levelName'];
     name = jsonRes['name'];
-    pointId = jsonRes['pointId'];
-    pointName = jsonRes['pointName'];
     source = jsonRes['source'];
     sourceName = jsonRes['sourceName'];
     status = jsonRes['status'];
     statusName = jsonRes['statusName'];
-    taskId = jsonRes['taskId'];
-    taskName = jsonRes['taskName'];
     type = jsonRes['type'];
     typeName = jsonRes['typeName'];
     updateDate = jsonRes['updateDate'];
     uploadDate = jsonRes['uploadDate'];
+    flowList = jsonRes['flowList'] == null ? null : [];
+
+    for (var flowListItem in flowList == null ? [] : jsonRes['flowList']) {
+      flowList.add(
+          flowListItem == null ? null : new DossierFlow.fromJson(flowListItem));
+    }
+
     createBy = jsonRes['createBy'] == null
         ? null
         : new User.fromJson(jsonRes['createBy']);
+    task = jsonRes['task'] == null
+        ? null
+        : new DossierTask.fromJson(jsonRes['task']);
     currentDealUser = jsonRes['currentDealUser'] == null
         ? null
         : new User.fromJson(jsonRes['currentDealUser']);
@@ -108,7 +126,7 @@ class DossierInfo {
 
   @override
   String toString() {
-    return '{"flowNum": $flowNum,"latitude": $latitude,"longitude": $longitude,"isNewRecord": $isNewRecord,"self": $self,"address": ${address != null ? '${json.encode(address)}' : 'null'},"code": ${code != null ? '${json.encode(code)}' : 'null'},"createDate": ${createDate != null ? '${json.encode(createDate)}' : 'null'},"describe": ${describe != null ? '${json.encode(describe)}' : 'null'},"id": ${id != null ? '${json.encode(id)}' : 'null'},"level": ${level != null ? '${json.encode(level)}' : 'null'},"levelName": ${levelName != null ? '${json.encode(levelName)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"pointId": ${pointId != null ? '${json.encode(pointId)}' : 'null'},"pointName": ${pointName != null ? '${json.encode(pointName)}' : 'null'},"source": ${source != null ? '${json.encode(source)}' : 'null'},"sourceName": ${sourceName != null ? '${json.encode(sourceName)}' : 'null'},"status": ${status != null ? '${json.encode(status)}' : 'null'},"statusName": ${statusName != null ? '${json.encode(statusName)}' : 'null'},"taskId": ${taskId != null ? '${json.encode(taskId)}' : 'null'},"taskName": ${taskName != null ? '${json.encode(taskName)}' : 'null'},"type": ${type != null ? '${json.encode(type)}' : 'null'},"typeName": ${typeName != null ? '${json.encode(typeName)}' : 'null'},"updateDate": ${updateDate != null ? '${json.encode(updateDate)}' : 'null'},"uploadDate": ${uploadDate != null ? '${json.encode(uploadDate)}' : 'null'},"createBy": $createBy,"currentDealUser": $currentDealUser,"uploadBy": $uploadBy}';
+    return '{"flowNum": $flowNum,"latitude": $latitude,"longitude": $longitude,"isNewRecord": $isNewRecord,"self": $self,"address": ${address != null ? '${json.encode(address)}' : 'null'},"code": ${code != null ? '${json.encode(code)}' : 'null'},"createDate": ${createDate != null ? '${json.encode(createDate)}' : 'null'},"describe": ${describe != null ? '${json.encode(describe)}' : 'null'},"files": ${files != null ? '${json.encode(files)}' : 'null'},"id": ${id != null ? '${json.encode(id)}' : 'null'},"level": ${level != null ? '${json.encode(level)}' : 'null'},"levelName": ${levelName != null ? '${json.encode(levelName)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"source": ${source != null ? '${json.encode(source)}' : 'null'},"sourceName": ${sourceName != null ? '${json.encode(sourceName)}' : 'null'},"status": ${status != null ? '${json.encode(status)}' : 'null'},"statusName": ${statusName != null ? '${json.encode(statusName)}' : 'null'},"type": ${type != null ? '${json.encode(type)}' : 'null'},"typeName": ${typeName != null ? '${json.encode(typeName)}' : 'null'},"updateDate": ${updateDate != null ? '${json.encode(updateDate)}' : 'null'},"uploadDate": ${uploadDate != null ? '${json.encode(uploadDate)}' : 'null'},"flowList": $flowList,"createBy": $createBy,"currentDealUser": $currentDealUser,"uploadBy": $uploadBy}';
   }
 }
 

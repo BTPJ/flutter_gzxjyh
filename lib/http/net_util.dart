@@ -17,7 +17,7 @@ class NetUtil {
   static const String POST = 'POST';
 
   static NetUtil _instance;
-  Dio mDio;
+  Dio _dio;
 
   factory NetUtil() => _getInstance();
 
@@ -56,10 +56,10 @@ class NetUtil {
       },
     );
 
-    mDio = Dio(baseOptions);
+    _dio = Dio(baseOptions);
     defaultCookieJar = DefaultCookieJar();
 
-    mDio.interceptors
+    _dio.interceptors
       ..add(LogInterceptor(
           responseHeader: false,
           responseBody: true,
@@ -67,8 +67,14 @@ class NetUtil {
           requestBody: true))
       ..add(CookieManager(defaultCookieJar))
       ..add(InterceptorsWrapper(
-          onError: (DioError e) =>
-              _handleError(null, e.message, dioError: e))); //错误逻辑处理
+          onError: (DioError e) => _handleError(null, e.message, dioError: e),
+          onResponse: (Response response) {
+            /// 判断session过期，自动重新登录
+            if (response.data.toString().contains('<title>')) {
+              EventManager.instance.eventBus
+                  .fire(EventCode(EventCode.LOGIN_FAILED));
+            }
+          })); //错误逻辑处理
   }
 
   /// 网络请求
@@ -93,15 +99,15 @@ class NetUtil {
           url += paramStr;
         }
         print('----------请求Url:$url');
-        response = await mDio.get(url);
+        response = await _dio.get(url);
       } else {
         print('----------请求Url:$url');
         if (params != null && params.isNotEmpty) {
-          response = await mDio.post(url, data: params);
-          print(mDio.options.headers);
+          response = await _dio.post(url, data: params);
+          print(_dio.options.headers);
           print('post参数：$params');
         } else {
-          response = await mDio.post(url);
+          response = await _dio.post(url);
         }
       }
 
@@ -160,10 +166,10 @@ class NetUtil {
       return;
     }
     switch (dioError.type) {
-      case DioErrorType.DEFAULT:
-        if (dioError.message.contains('Connection timed out')) {
-          ToastUtil.showShort('网络连接超时');
-        }
+      case DioErrorType.CONNECT_TIMEOUT:
+        ToastUtil.showShort('网络连接超时');
+        EventManager.instance.eventBus
+            .fire(EventCode(EventCode.CONNECT_TIME_OUT));
         break;
       case DioErrorType.RESPONSE:
         switch (dioError.response.statusCode) {

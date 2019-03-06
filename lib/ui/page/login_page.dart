@@ -176,7 +176,7 @@ class LoginState extends State<LoginPage> {
 
     /// 每次登录前需要清除之前的缓存
     /// 不直接 NetUtil.instance.defaultCookieJar.deleteAll()是因为会报错(暂不明原因)
-    if(Api.selIp == null){
+    if (Api.selIp == null) {
       Api.selIp = Api.DEFAULT_IP;
     }
     List hostAndPort = Api.selIp.split(':');
@@ -219,8 +219,11 @@ class LoginState extends State<LoginPage> {
 
     /// 登录失败
     EventManager.instance.eventBus.on<EventCode>().listen((event) {
-      if (event.code == EventCode.LOGIN_FAILED) {
-        Navigator.pop(context);
+      switch (event.code) {
+        case EventCode.LOGIN_FAILED:
+        case EventCode.CONNECT_TIME_OUT:
+          Navigator.pop(context);
+          break;
       }
     });
   }
