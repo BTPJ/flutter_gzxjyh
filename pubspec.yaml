@@ -96,6 +96,8 @@ flutter:
   - images/ic_on_time_flag.png
   - images/ic_postpone_flag.png
   - images/ic_loading_pic.png
+  - images/ic_star_blue.png
+  - images/ic_star_gray.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -127,4 +127,13 @@ class Api {
 
   /// 获取案卷详情
   String get getDossierTaskDetail => '${home}gzxj/aj/gzxjDossierInfo/getAppInfo';
+
+  /// 获取站点报警详情
+  String get loadCurrentWarnBySite => '${home}gzxj/sjjc/rest/findCurrentWarnBySite';
+
+  /// 关注
+  String get saveWarnAttention => '${home}gzxj/sjjc/gzxjWarnAttention/save';
+
+  /// 取消关注
+  String get deleteAttention => '${home}gzxj/sjjc/gzxjWarnAttention/delete';
 }
