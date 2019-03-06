@@ -136,4 +136,10 @@ class Api {
 
   /// 取消关注
   String get deleteAttention => '${home}gzxj/sjjc/gzxjWarnAttention/delete';
+
+  /// 实时上报用户地理位置
+  String get reportUserLocation => '${home}gzxj/gzxjUserCurrentStatus/save';
+
+  /// 添加巡检记录
+  String get reportPatrolLocation => '${home}gzxj/xj/gzxjPatrolRecord/save';
 }

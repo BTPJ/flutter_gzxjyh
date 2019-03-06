@@ -98,7 +98,7 @@ class NetUtil {
           paramStr = paramStr.substring(0, paramStr.length - 1);
           url += paramStr;
         }
-        print('----------请求Url:$url');
+        // print('----------请求Url:$url');
         response = await _dio.get(url);
       } else {
         print('----------请求Url:$url');
@@ -112,7 +112,7 @@ class NetUtil {
       }
 
       statusCode = response.statusCode;
-      print('------------返回码：$statusCode');
+      // print('------------返回码：$statusCode');
       // 处理错误部分
       if (statusCode != 200) {
         errorMsg = '服务器请求错误,状态码?:$statusCode';
@@ -121,7 +121,7 @@ class NetUtil {
       }
 
       if (callBack != null) {
-        print('----------返回内容:${response.data}');
+        // print('----------返回内容:${response.data}');
         Map body = json.decode(response.data);
         // 请求数据结果码
         String tipMessage = body['tipMessage'];

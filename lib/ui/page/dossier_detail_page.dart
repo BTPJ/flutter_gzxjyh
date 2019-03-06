@@ -14,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// 案卷详情（首页-问题处理-案卷详情）
+/// 案卷详情（首页-问题处理-案卷详情）®
 class DossierDetailPage extends StatefulWidget {
   /// 案卷Id
   final String dossierId;

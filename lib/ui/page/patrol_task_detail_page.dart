@@ -5,6 +5,8 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/patrol_task.dart';
 import 'package:flutter_gzxjyh/model/patrol_task_flow.dart';
+import 'package:flutter_gzxjyh/timer/report_patrol_position_timer.dart';
+import 'package:flutter_gzxjyh/timer/report_user_position_timer.dart';
 import 'package:flutter_gzxjyh/ui/widget/rating_bar.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -488,7 +490,13 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                                 top: ScreenUtil().setHeight(8),
                                 bottom: ScreenUtil().setHeight(8)),
                             color: MyColors.FF2EAFFF,
-                            onPressed: () {},
+                            onPressed: () {
+                              // 关闭用户位置上传服务和开启巡检位置上传服务
+                              ReportPatrolPositionTimer()
+                                  .startTimer(_patrolTask?.id);
+                              ReportUserPositionTimer().cancel();
+                              setState(() {});
+                            },
                             child: Text(
                               _getOperateText(),
                               style: TextStyle(
@@ -585,7 +593,10 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
       case '0':
         return '开始巡检';
       case '1':
-        return '巡检中';
+        if (ReportPatrolPositionTimer().isActive()) {
+          return '巡检中';
+        }
+        return '暂停中,继续巡检';
       case '2':
       case '3':
         return '确认';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/sp_key.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
+import 'package:flutter_gzxjyh/timer/report_user_position_timer.dart';
 import 'package:flutter_gzxjyh/ui/page/login_page.dart';
 import 'package:flutter_gzxjyh/utils/sp_util.dart';
 import 'package:amap_base/amap_base.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   /// 构造
   MyApp() {
     _initDefaultIpAsync();
+    ReportUserPositionTimer().startTimer();
   }
 
   /// 初始化默认IP(异步)
