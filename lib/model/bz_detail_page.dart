@@ -37,6 +37,7 @@ class _BZDetailPageState extends State<BZDetailPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             /// 站点
             Container(
@@ -168,7 +169,9 @@ class _BZDetailPageState extends State<BZDetailPage> {
                 left: ScreenUtil().setWidth(20),
                 right: ScreenUtil().setWidth(20),
               ),
-              child: Divider(),
+              child: Divider(
+                height: 1,
+              ),
             ),
 
             /// 采集时间
@@ -212,15 +215,411 @@ class _BZDetailPageState extends State<BZDetailPage> {
                 left: ScreenUtil().setWidth(20),
                 right: ScreenUtil().setWidth(20),
               ),
-              child: Divider(),
+              child: Divider(
+                height: 1,
+              ),
             ),
 
             /// 数据信息
             Column(
               children: _dataItem(),
-            )
+            ),
+
+            /// 基础信息
+            Container(
+              color: MyColors.FFF0F0F0,
+              width: ScreenUtil.screenWidth,
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Text(
+                "基础信息",
+                style: TextStyle(
+                  color: MyColors.FF999999,
+                  fontSize: ScreenUtil().setSp(14),
+                ),
+              ),
+            ),
+
+            /// 站点编号
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "站点编号",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    _siteInfo?.code ?? "",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 站点类型
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "站点类型",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    _siteInfo?.typeName ?? _getTypeName(),
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 所属区域
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "所属区域",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    "${_siteInfo?.zone?.parent?.name ?? ""}${_siteInfo?.zone?.name ?? ""}",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 位置
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "位置",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Expanded(
+                    child: Text(
+                      _siteInfo?.address ?? "",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(16),
+                        color: MyColors.FF000000,
+                      ),
+                    ),
+                  ),
+
+                  Icon(Icons.location_on, color: MyColors.FF5988A4)
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 规格
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "规格",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    _siteInfo?.size ?? "",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 地面高程
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "地面高程",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    "${_siteInfo?.elevation ?? ""}",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 泵站直径
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "泵站直径",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    "${_siteInfo?.diameter ?? ""}",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
+
+            /// 备注
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+                top: ScreenUtil().setWidth(15),
+                bottom: ScreenUtil().setWidth(15),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(114),
+                    margin: EdgeInsets.only(
+                      right: ScreenUtil().setWidth(10),
+                    ),
+                    child: Text(
+                      "备注",
+                      style: TextStyle(
+                        color: MyColors.FF666666,
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
+                  ),
+
+                  ///
+                  Text(
+                    _siteInfo?.remarks ?? "",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: MyColors.FF000000,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
+            ),
 
             ///
+            Container(
+              height: ScreenUtil().setHeight(15),
+            ),
           ],
         ),
       ),
@@ -241,11 +640,13 @@ class _BZDetailPageState extends State<BZDetailPage> {
     });
   }
 
+  /// 循环添加数据信息
   List<Widget> _dataItem() {
     List<Widget> widgets = List();
 
     if (_siteInfo?.currentData != null && _siteInfo.currentData.isNotEmpty) {
-      for (var data in _siteInfo.currentData) {
+      for (int i = 0; i < _siteInfo.currentData.length; i++) {
+        var data = _siteInfo.currentData[i];
         widgets.add(
           Container(
             padding: EdgeInsets.only(
@@ -282,19 +683,32 @@ class _BZDetailPageState extends State<BZDetailPage> {
             ),
           ),
         );
-
-        widgets.add(
-          Container(
-            padding: EdgeInsets.only(
-              left: ScreenUtil().setWidth(20),
-              right: ScreenUtil().setWidth(20),
+        if (i != _siteInfo.currentData.length - 1) {
+          widgets.add(
+            Container(
+              padding: EdgeInsets.only(
+                left: ScreenUtil().setWidth(20),
+                right: ScreenUtil().setWidth(20),
+              ),
+              child: Divider(
+                height: 1,
+              ),
             ),
-            child: Divider(),
-          ),
-        );
+          );
+        }
       }
     }
 
     return widgets;
+  }
+
+  String _getTypeName() {
+    if (_siteInfo?.type == "1") {
+      return "泵站";
+    } else if (_siteInfo?.type == "2") {
+      return "污水厂";
+    } else {
+      return "";
+    }
   }
 }

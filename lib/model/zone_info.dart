@@ -5,13 +5,17 @@ class ZoneInfo {
   bool isNewRecord;
   String id;
   String name;
+  ZoneInfo parent;
 
-  ZoneInfo.fromParams({this.isNewRecord, this.id, this.name});
+  ZoneInfo.fromParams({this.isNewRecord, this.id, this.name, this.parent});
 
   ZoneInfo.fromJson(jsonRes) {
     isNewRecord = jsonRes['isNewRecord'];
     id = jsonRes['id'];
     name = jsonRes['name'];
+    parent = jsonRes['parent'] == null
+        ? null
+        : new ZoneInfo.fromJson(jsonRes['parent']);
   }
 
   @override

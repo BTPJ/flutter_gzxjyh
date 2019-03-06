@@ -13,15 +13,21 @@ class SiteInfo {
   String endDate;
   String id;
   String name;
+  String typeName;
   String startDate;
   HistoryWarnPage historyWarn;
   HistoryDataPage historyData;
   double latitude;
   double longitude;
+  double elevation;
+  double diameter;
   String address;
   String type;
   String status;
   String updateDate;
+  String code;
+  String size;
+  String remarks;
   ZoneInfo zone;
   List<MonitorData> currentData;
 
@@ -54,8 +60,15 @@ class SiteInfo {
       this.endDate,
       this.id,
       this.name,
+      this.typeName,
       this.startDate,
       this.updateDate,
+      this.elevation,
+      this.diameter,
+      this.code,
+      this.size,
+      this.zone,
+      this.remarks,
       this.historyWarn});
 
   factory SiteInfo(jsonStr) => jsonStr == null
@@ -70,11 +83,17 @@ class SiteInfo {
     id = jsonRes['id'];
     latitude = jsonRes['latitude'];
     longitude = jsonRes['longitude'];
+    elevation = jsonRes['elevation'];
+    diameter = jsonRes['diameter'];
     isNewRecord = jsonRes['isNewRecord'];
     address = jsonRes['address'];
     type = jsonRes['type'];
     status = jsonRes['status'];
     name = jsonRes['name'];
+    typeName = jsonRes['typeName'];
+    remarks = jsonRes['remarks'];
+    code = jsonRes['code'];
+    size = jsonRes['size'];
     startDate = jsonRes['startDate'];
     updateDate = jsonRes['updateDate'];
     zone =
@@ -96,7 +115,7 @@ class SiteInfo {
 
   @override
   String toString() {
-    return 'SiteInfo{isNewRecord: $isNewRecord, endDate: $endDate, id: $id, name: $name, startDate: $startDate, historyWarn: $historyWarn, historyData: $historyData, latitude: $latitude, longitude: $longitude, address: $address, type: $type, status: $status, updateDate: $updateDate, zone: $zone}';
+    return 'SiteInfo{isNewRecord: $isNewRecord, endDate: $endDate, id: $id, name: $name, typeName: $typeName, startDate: $startDate, historyWarn: $historyWarn, historyData: $historyData, latitude: $latitude, longitude: $longitude, address: $address, type: $type, status: $status, updateDate: $updateDate, code: $code, zone: $zone, currentData: $currentData}';
   }
 }
 
