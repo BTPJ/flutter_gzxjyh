@@ -7,7 +7,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/current_warn.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 实时监控-泵站监测点详情
 class StationAlarmDetailPage extends StatefulWidget {

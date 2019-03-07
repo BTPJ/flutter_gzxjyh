@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/ui/page/choose_sewage_page.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_picker/Picker.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-化验数据/生产数据-查询
 class DataFilterQueryPage2 extends StatefulWidget {

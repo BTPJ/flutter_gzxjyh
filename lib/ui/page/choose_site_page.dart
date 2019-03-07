@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-监测数据/告警数据-查询-站点选择
 class ChooseSitePage extends StatefulWidget {

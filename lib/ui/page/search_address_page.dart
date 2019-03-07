@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
 import 'package:amap_base/amap_base.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 事件地址（定位）定位时选择附近位置用
 class SearchAddressPage extends StatefulWidget {

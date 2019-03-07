@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 空列表的提示组件
 class EmptyView extends StatelessWidget {

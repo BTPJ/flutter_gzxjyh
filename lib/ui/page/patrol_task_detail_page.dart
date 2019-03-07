@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
+import 'package:flutter_gzxjyh/event/event_code.dart';
+import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
@@ -7,9 +9,10 @@ import 'package:flutter_gzxjyh/model/patrol_task.dart';
 import 'package:flutter_gzxjyh/model/patrol_task_flow.dart';
 import 'package:flutter_gzxjyh/timer/report_patrol_position_timer.dart';
 import 'package:flutter_gzxjyh/timer/report_user_position_timer.dart';
+import 'package:flutter_gzxjyh/ui/page/patrol_line_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/rating_bar.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检任务详情（首页-巡检任务-详情）
 class PatrolTaskDetailPage extends StatefulWidget {
@@ -491,11 +494,40 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
                                 bottom: ScreenUtil().setHeight(8)),
                             color: MyColors.FF2EAFFF,
                             onPressed: () {
-                              // 关闭用户位置上传服务和开启巡检位置上传服务
-                              ReportPatrolPositionTimer()
-                                  .startTimer(_patrolTask?.id);
-                              ReportUserPositionTimer().cancel();
-                              setState(() {});
+                              switch (_patrolTask?.status) {
+                                case '0': // 巡检人员开始巡检
+                                  _startTask();
+                                  break;
+                                case '1': // 巡检人员继续/暂停巡检
+                                  if (!ReportPatrolPositionTimer().isActive()) {
+                                    // 暂停时
+                                    ReportPatrolPositionTimer()
+                                        .startTimer(widget.patrolTaskId);
+                                    ReportUserPositionTimer().cancel();
+                                  }
+                                  setState(() {});
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => PatrolLinePage(
+                                              taskId: widget.patrolTaskId)));
+                                  break;
+                                case '2':
+                                case '3': // 巡检管理人员确认
+
+                                  break;
+                                case '4':
+                                  var flowList = _patrolTask?.flowList;
+                                  if (flowList?.isNotEmpty == true &&
+                                      flowList.last.operateType == '3') {
+                                    // 延期审核
+
+                                  } else {
+                                    // 撤销审核
+
+                                  }
+                                  break;
+                              }
                             },
                             child: Text(
                               _getOperateText(),
@@ -605,5 +637,24 @@ class _PatrolTaskDetailPageState extends State<PatrolTaskDetailPage> {
       default:
         return '';
     }
+  }
+
+  /// 开始巡检
+  _startTask() {
+    NetUtil().get(Api().startPatrolTask, (res) {
+      _loadPatrolTaskDetail();
+      EventManager().eventBus.fire(EventCode(EventCode.START_PATROL_TASK));
+      // 启动上传经纬度的服务
+      // 关闭用户位置上传服务和开启巡检位置上传服务
+      ReportPatrolPositionTimer().startTimer(_patrolTask?.id);
+      ReportUserPositionTimer().cancel();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => PatrolLinePage(taskId: widget.patrolTaskId)));
+    }, errorCallBack: (e) {
+      // 这里通过判断错误提示“你有未完成的巡检任务”判断
+      print(e);
+    }, params: {'id': widget.patrolTaskId});
   }
 }

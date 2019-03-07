@@ -3,11 +3,11 @@ import 'package:flutter_gzxjyh/constant/my_colors.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
-import 'package:flutter_gzxjyh/model/bz_detail_page.dart';
+import 'package:flutter_gzxjyh/ui/page/bz_detail_page.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/page/wsc_detail.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 
 /// 首页(巡检人员)-实时监测Tab-实时监测Tab

@@ -26,7 +26,6 @@ dependencies:
   barcode_scan: ^0.0.8
   # https://github.com/tekartik/synchronized.dart
   synchronized: ^2.0.2+1
-  flutter_screenutil: ^0.4.6
   event_bus: ^1.0.3
   url_launcher: ^5.0.1
   flutter_picker: ^1.0.7

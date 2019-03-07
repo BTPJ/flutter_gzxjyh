@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/sp_key.dart';
 import 'package:flutter_gzxjyh/utils/sp_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/ui/page/login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';

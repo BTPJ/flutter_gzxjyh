@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/page/station_alarm_detail.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 class WSCDetailPage extends StatefulWidget {
   final String siteId;

@@ -142,4 +142,7 @@ class Api {
 
   /// 添加巡检记录
   String get reportPatrolLocation => '${home}gzxj/xj/gzxjPatrolRecord/save';
+
+  /// 开始巡检任务
+  String get startPatrolTask => '${home}gzxj/xj/gzxjPatrolTask/startTask';
 }

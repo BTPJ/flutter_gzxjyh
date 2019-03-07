@@ -4,7 +4,7 @@ import 'package:flutter_gzxjyh/event/event_code.dart';
 import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/ui/page/dossier_record_page.dart';
 import 'package:flutter_gzxjyh/ui/page/dossier_report_child_page.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主界面-首页-问题上报
 class DossierReportPage extends StatefulWidget {

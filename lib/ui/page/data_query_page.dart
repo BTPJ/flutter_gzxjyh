@@ -6,7 +6,7 @@ import 'package:flutter_gzxjyh/ui/page/monitor_data_page.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_data_page.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_plan_track_page.dart';
 import 'package:flutter_gzxjyh/ui/page/warn_data_page.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主界面-数据查询
 class DataQueryPage extends StatefulWidget {

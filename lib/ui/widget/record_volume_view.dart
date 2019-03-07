@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 声音大小的仿水波纹展示
 class RecordVolumeView extends StatefulWidget {

@@ -8,7 +8,7 @@ import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/page/data_filter_query_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-监测数据
 class MonitorDataPage extends StatefulWidget {

@@ -5,8 +5,8 @@ import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
 import 'package:flutter_gzxjyh/model/assay_data.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 审核
 class AssayDataAuditPage extends StatefulWidget {

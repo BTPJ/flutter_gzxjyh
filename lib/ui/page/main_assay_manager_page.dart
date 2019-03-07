@@ -3,7 +3,7 @@ import 'package:flutter_gzxjyh/ui/page/contact_page.dart';
 import 'package:flutter_gzxjyh/ui/page/data_query_page.dart';
 import 'package:flutter_gzxjyh/ui/page/home_assay_manager_tab_page.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 化验类主页,底部为三标签(经理)
 class MainAssayManagerPage extends StatefulWidget {

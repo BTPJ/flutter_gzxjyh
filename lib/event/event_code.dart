@@ -16,10 +16,16 @@ class EventCode {
   static const CONNECT_TIME_OUT = 4;
 
   /// 审核化验数据成功
-  static const OPERATE_ASSAY_DATA_SUCCESS = 3;
+  static const OPERATE_ASSAY_DATA_SUCCESS = 5;
 
   /// 审核化验数据成功
-  static const AUDIT_PRODUCE_OR_ASSAY_DATA = 4;
+  static const AUDIT_PRODUCE_OR_ASSAY_DATA = 6;
+
+  /// 到达巡检点
+  static const ARRIVE_TO_PATROL_POINT = 7;
+
+  /// 开始巡检
+  static const START_PATROL_TASK = 8;
 
   /// 刷新告警关注
   static const REFRESH_WARN_ATTENTION = 5;

@@ -17,7 +17,7 @@ import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 化验数据填报
 class AssayDataFillPage extends StatefulWidget {

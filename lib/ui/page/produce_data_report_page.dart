@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_data_record_tab_page.dart';
 import 'package:flutter_gzxjyh/ui/page/produce_data_report_tab_page.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页-生产数据填报
 class ProduceDataReportPage extends StatefulWidget {

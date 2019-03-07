@@ -7,7 +7,7 @@ import 'package:flutter_gzxjyh/model/produce_data.dart';
 import 'package:flutter_gzxjyh/model/site_info.dart';
 import 'package:flutter_gzxjyh/ui/page/data_filter_query_page2.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-生产数据
 class ProduceDataPage extends StatefulWidget {

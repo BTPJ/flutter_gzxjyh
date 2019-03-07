@@ -11,7 +11,7 @@ import 'package:flutter_gzxjyh/ui/page/assay_data_audit_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 化验数据详情
 class AssayDataDetailPage extends StatefulWidget {

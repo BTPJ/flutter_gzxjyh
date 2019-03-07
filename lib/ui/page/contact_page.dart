@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/contact.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// 巡检人员主界面-通讯录

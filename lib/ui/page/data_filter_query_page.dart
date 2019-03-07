@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/ui/page/choose_site_page.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_picker/Picker.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-监测数据/告警数据-查询
 class DataFilterQueryPage extends StatefulWidget {

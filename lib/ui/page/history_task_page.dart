@@ -12,7 +12,7 @@ import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
 import 'package:flutter_gzxjyh/utils/date_util.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_picker/Picker.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(巡检人员)-数据查询-历史任务
 class HistoryTaskPage extends StatefulWidget {

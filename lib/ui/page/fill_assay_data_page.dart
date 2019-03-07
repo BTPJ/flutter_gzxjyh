@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
 import 'package:flutter_gzxjyh/model/assay_data_detail.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 数据填写
 class FillAssayDataPage extends StatefulWidget {

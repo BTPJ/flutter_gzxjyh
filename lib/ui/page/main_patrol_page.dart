@@ -5,7 +5,7 @@ import 'package:flutter_gzxjyh/ui/page/data_query_page.dart';
 import 'package:flutter_gzxjyh/ui/page/index_patrol_page.dart';
 import 'package:flutter_gzxjyh/ui/page/real_time_monitor_page.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主页
 class MainPatrolPage extends StatefulWidget {

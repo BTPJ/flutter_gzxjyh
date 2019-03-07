@@ -11,7 +11,7 @@ import 'package:flutter_gzxjyh/ui/page/notify_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
 import 'package:flutter_gzxjyh/utils/sp_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页-个人中心
 class PersonalCenterPage extends StatefulWidget {

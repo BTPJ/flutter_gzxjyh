@@ -20,7 +20,7 @@ import 'package:flutter_gzxjyh/ui/page/produce_data_report_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/marquee_vertical.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主界面-首页
 class IndexPatrolPage extends StatefulWidget {

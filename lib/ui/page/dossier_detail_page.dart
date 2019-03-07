@@ -10,7 +10,7 @@ import 'package:flutter_gzxjyh/model/dossier_info.dart';
 import 'package:flutter_gzxjyh/model/record.dart';
 import 'package:flutter_gzxjyh/ui/widget/photo_gallery.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:url_launcher/url_launcher.dart';
 

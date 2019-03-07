@@ -15,7 +15,7 @@ import 'package:flutter_gzxjyh/ui/widget/loading_dialog.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
 import 'package:flutter_gzxjyh/utils/sp_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 /// 登录
@@ -51,7 +51,7 @@ class LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     // TODO: 创建界面
     //设置适配尺寸 (填入设计稿中设备的屏幕尺寸)
-    ScreenUtil.instance = ScreenUtil(width: 360, height: 640)..init(context);
+    ScreenUtil().init(context, width: 360, height: 640);
 
     return MaterialApp(
       home: WillPopScope(

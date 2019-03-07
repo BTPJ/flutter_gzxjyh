@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:amap_base/amap_base.dart';
+import 'package:flutter_gzxjyh/event/event_code.dart';
+import 'package:flutter_gzxjyh/event/event_manager.dart';
 import 'package:flutter_gzxjyh/http/api.dart';
 import 'package:flutter_gzxjyh/http/net_util.dart';
+import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 
 /// 上传位置的Timer
@@ -79,7 +82,13 @@ class ReportPatrolPositionTimer {
   /// 上传巡检员位置
   /// longitude：经度 latitude：纬度
   _reportPatrolLocation(String taskId, double longitude, double latitude) {
-    NetUtil().get(Api().reportPatrolLocation, (res) {}, params: {
+    NetUtil().get(Api().reportPatrolLocation, (res) {
+      var baseResp = BaseResp<String>(res,null);
+      if(baseResp?.tipMessage!=null&&baseResp.tipMessage.isNotEmpty){
+        print('到达巡检点');
+        EventManager().eventBus.fire(EventCode(EventCode.ARRIVE_TO_PATROL_POINT));
+      }
+    }, params: {
       'taskId': taskId,
       'longitude': longitude,
       'latitude': latitude

@@ -6,7 +6,7 @@ import 'package:flutter_gzxjyh/model/assay_format.dart';
 import 'package:flutter_gzxjyh/model/assay_item_format.dart';
 import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 添加分析项
 class AssayItemPage extends StatefulWidget {

@@ -13,7 +13,7 @@ import 'package:flutter_gzxjyh/ui/page/personal_center_page.dart';
 import 'package:flutter_gzxjyh/ui/widget/badge_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/marquee_vertical.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 首页(管理人员)
 class HomeAssayManagerTabPage extends StatefulWidget {

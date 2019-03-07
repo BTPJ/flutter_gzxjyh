@@ -6,7 +6,7 @@ import 'package:flutter_gzxjyh/model/base_resp.dart';
 import 'package:flutter_gzxjyh/model/dossier_info.dart';
 import 'package:flutter_gzxjyh/ui/widget/empty_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_more.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主界面-首页-问题上报-上报记录子页面
 class DossierRecordPage extends StatefulWidget {

@@ -21,7 +21,7 @@ import 'package:flutter_gzxjyh/ui/widget/asset_view.dart';
 import 'package:flutter_gzxjyh/ui/widget/loading_dialog.dart';
 import 'package:flutter_gzxjyh/utils/toast_util.dart';
 import 'package:flutter_gzxjyh/utils/user_manager.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gzxjyh/constant/my_colors.dart';
 import 'package:flutter_gzxjyh/ui/page/real_time_monitor_child_tab_page.dart';
 import 'package:flutter_gzxjyh/ui/page/real_time_warn_tab_page.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gzxjyh/utils/screen_util.dart';
 
 /// 巡检人员主界面-实时监控
 class RealTimeMonitorPage extends StatefulWidget {
